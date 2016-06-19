@@ -43,13 +43,12 @@ public class ConvertTask extends AsyncTaskLoader<Bitmap> {
     int m_numH, m_numS, m_numV;
     int m_blurFilterSize;
     boolean m_isShowEdge;
-    int m_edgeStrength;
     Context m_context;
 
     double m_gapH, m_gapS, m_gapV;
 
 
-    public ConvertTask(Context context, Uri orgUri, int size, int numH, int numS, int numV, int blur, boolean isShowEdge, int edgeStrength) {
+    public ConvertTask(Context context, Uri orgUri, int size, int numH, int numS, int numV, int blur, boolean isShowEdge) {
         super(context);
         m_context = context;
         m_orgUri = orgUri;
@@ -60,7 +59,6 @@ public class ConvertTask extends AsyncTaskLoader<Bitmap> {
         m_blurFilterSize = blur;
         m_isShowEdge = isShowEdge;
         // (0 ~ 100) to (210 ~ 10)
-        m_edgeStrength = (100 - edgeStrength) * 2 + 10;
 
         m_gapH = 180.0f / m_numH;
         m_gapS = 256.0f / m_numS;
@@ -100,7 +98,7 @@ public class ConvertTask extends AsyncTaskLoader<Bitmap> {
 
         /* add edge */
         if (m_isShowEdge) {
-            Imgproc.Canny(grayImage, edgeImage, this.m_edgeStrength, Consts.FILTER_EDGE_UPPER);
+            Imgproc.Canny(grayImage, edgeImage, Consts.FILTER_EDGE_LOWER, Consts.FILTER_EDGE_UPPER);
             Imgproc.cvtColor(edgeImage, outputImage, Imgproc.COLOR_GRAY2BGR);
         }
 

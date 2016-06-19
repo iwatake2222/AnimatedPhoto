@@ -11,7 +11,6 @@ public class Consts {
     public static final int DEFAULT_FILTER_NUM_S = 8;
     public static final int DEFAULT_FILTER_NUM_V = 4;
     public static final int DEFAULT_FILTER_BLUR = 5;
-    public static final int DEFAULT_FILTER_EDGE_STRENGTH = 50;
     public static final int FILTER_EDGE_LOWER = 50;    // the lower, the more sensitive(noisy)
     public static final int FILTER_EDGE_UPPER = 150;   // the lower, the more sensitive(noisy)
 }

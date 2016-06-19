@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.setType("image/jpeg");
+            intent.setType("image/*");
             startActivityForResult(intent, REQUEST_GALLERY_IMAGE_AFTER19);
         }
 

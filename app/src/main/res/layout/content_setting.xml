@@ -132,14 +132,13 @@
             android:layout_weight="0.3"
             android:text="Edge:" />
 
-        <SeekBar
-            android:id="@+id/seekBarConvertEdge"
+        <Switch
+            android:id="@+id/switchSettingEdge"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_weight="0.7"
-            android:max="100"
-            android:progress="50" />
+            android:layoutDirection="rtl"
+            />
     </LinearLayout>
 
 

@@ -41,7 +41,6 @@ public class ViewActivity extends AppCompatActivity implements LoaderManager.Loa
     public static final String EXTRA_SETTING_V = "com.iwiw.take.animatedphoto.EXTRA_SETTING_V";
     public static final String EXTRA_SETTING_BLUR = "com.iwiw.take.animatedphoto.EXTRA_SETTING_BLUR";
     public static final String EXTRA_SETTING_EDGE = "com.iwiw.take.animatedphoto.EXTRA_SETTING_EDGE";
-    public static final String EXTRA_SETTING_EDGE_STRENGTH = "com.iwiw.take.animatedphoto.EXTRA_SETTING_EDGE_STRENGTH";
     public static final String EXTRA_SETTING_SIZE = "com.iwiw.take.animatedphoto.EXTRA_SETTING_SIZE";
     static final int REQUEST_SETTING = 200;
     Switch m_switchOrg;
@@ -127,8 +126,7 @@ public class ViewActivity extends AppCompatActivity implements LoaderManager.Loa
             int numV = data.getIntExtra(EXTRA_SETTING_V, Consts.DEFAULT_FILTER_NUM_V);
             int blur = data.getIntExtra(EXTRA_SETTING_BLUR, Consts.DEFAULT_FILTER_BLUR);
             boolean isShowEdge = data.getBooleanExtra(EXTRA_SETTING_EDGE, true);
-            int edgeStrength = data.getIntExtra(EXTRA_SETTING_EDGE_STRENGTH, Consts.DEFAULT_FILTER_EDGE_STRENGTH);
-            startConvert(size, numH, numS, numV, blur, isShowEdge, edgeStrength);
+            startConvert(size, numH, numS, numV, blur, isShowEdge);
         }
     }
 
@@ -140,7 +138,7 @@ public class ViewActivity extends AppCompatActivity implements LoaderManager.Loa
         return Uri.parse(convUriStr);
     }
 
-    private void startConvert(int size, int numH, int numS, int numV, int blur, boolean isShowEdge, int edgeStrength) {
+    private void startConvert(int size, int numH, int numS, int numV, int blur, boolean isShowEdge) {
 //        Utility.logDebug(Integer.toString(numH));
 //        Utility.logDebug(Integer.toString(numS));
 //        Utility.logDebug(Integer.toString(numV));
@@ -155,7 +153,6 @@ public class ViewActivity extends AppCompatActivity implements LoaderManager.Loa
         bundle.putInt("numV", numV);
         bundle.putInt("blur", blur);
         bundle.putBoolean("isShowEdge", isShowEdge);
-        bundle.putInt("edgeStrength", edgeStrength);
 //        getLoaderManager().initLoader(1, bundle, this);
         getLoaderManager().restartLoader(1, bundle, this);
 
@@ -176,8 +173,7 @@ public class ViewActivity extends AppCompatActivity implements LoaderManager.Loa
                     Uri.parse(args.getString("orgUrl")), args.getInt("size"),
                     args.getInt("numH"), args.getInt("numS"), args.getInt("numV"),
                     args.getInt("blur"),
-                    args.getBoolean("isShowEdge"),
-                    args.getInt("edgeStrength")
+                    args.getBoolean("isShowEdge")
                     );
             m_convertTaskLoader.forceLoad();
             return m_convertTaskLoader;

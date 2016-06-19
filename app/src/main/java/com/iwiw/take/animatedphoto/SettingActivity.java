@@ -21,7 +21,7 @@ public class SettingActivity extends AppCompatActivity {
     SeekBar m_seekBarS;
     SeekBar m_seekBarV;
     SeekBar m_seekBarBlur;
-    SeekBar m_seekBarEdge;
+    Switch m_switchEdge;
     RadioGroup m_radioGroupSize;
     TextView m_textViewColor;
     TextView m_textViewSettingHue;
@@ -62,8 +62,7 @@ public class SettingActivity extends AppCompatActivity {
         intent.putExtra(ViewActivity.EXTRA_SETTING_S, m_seekBarS.getProgress() + 1);
         intent.putExtra(ViewActivity.EXTRA_SETTING_V, m_seekBarV.getProgress() + 1);
         intent.putExtra(ViewActivity.EXTRA_SETTING_BLUR, m_seekBarBlur.getProgress() * 2 + 1);
-        intent.putExtra(ViewActivity.EXTRA_SETTING_EDGE, m_seekBarEdge.getProgress()!=0);
-        intent.putExtra(ViewActivity.EXTRA_SETTING_EDGE_STRENGTH, m_seekBarEdge.getProgress());
+        intent.putExtra(ViewActivity.EXTRA_SETTING_EDGE, m_switchEdge.isChecked());
         setResult(RESULT_OK, intent);
         finish();
     }
@@ -80,7 +79,7 @@ public class SettingActivity extends AppCompatActivity {
         m_seekBarS = (SeekBar) findViewById(R.id.seekBarConvertSaturation);
         m_seekBarV = (SeekBar) findViewById(R.id.seekBarConvertValue);
         m_seekBarBlur = (SeekBar) findViewById(R.id.seekBarConvertBlur);
-        m_seekBarEdge = (SeekBar) findViewById(R.id.seekBarConvertEdge);
+        m_switchEdge = (Switch) findViewById(R.id.switchSettingEdge);
         m_radioGroupSize = (RadioGroup) findViewById(R.id.RadioGroupSettingSize);
         m_textViewColor = (TextView) findViewById(R.id.textViewSettingColor);
         m_textViewSettingHue = (TextView) findViewById(R.id.textViewSettingHue);
@@ -136,7 +135,7 @@ public class SettingActivity extends AppCompatActivity {
         editor.putInt("NUM_S", m_seekBarS.getProgress());
         editor.putInt("NUM_V", m_seekBarV.getProgress());
         editor.putInt("NUM_BLUR", m_seekBarBlur.getProgress());
-        editor.putInt("EDGE_STRENGTH", m_seekBarEdge.getProgress());
+        editor.putBoolean("EDGE", m_switchEdge.isChecked());
         editor.putInt("NUM_SIZE", size);
         editor.commit();
     }
@@ -147,7 +146,7 @@ public class SettingActivity extends AppCompatActivity {
         m_seekBarS.setProgress(sharedPreferences.getInt("NUM_S", Consts.DEFAULT_FILTER_NUM_S-1));
         m_seekBarV.setProgress(sharedPreferences.getInt("NUM_V", Consts.DEFAULT_FILTER_NUM_V-1));
         m_seekBarBlur.setProgress(sharedPreferences.getInt("NUM_BLUR", Consts.DEFAULT_FILTER_BLUR / 2));
-        m_seekBarEdge.setProgress(sharedPreferences.getInt("EDGE_STRENGTH", Consts.DEFAULT_FILTER_EDGE_STRENGTH));
+        m_switchEdge.setChecked(sharedPreferences.getBoolean("EDGE", true));
         int size = sharedPreferences.getInt("NUM_SIZE", Consts.SIZE_S);
         RadioButton rb;
         switch (size){

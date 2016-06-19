@@ -103,7 +103,15 @@ public class Utility {
     }
 
     public static String getSaveDirectory() {
-        return Environment.getExternalStorageDirectory().toString() + "/AnimatedPhoto";
+        File dir = new File(Environment.getExternalStorageDirectory().toString() + "/AnimatedPhoto");
+        if(!dir.exists()){
+            if(dir.mkdirs()){
+                Utility.logDebug("mkdir " + dir.getPath());
+            } else {
+                Utility.logError("Error mkdir");
+            }
+        }
+        return dir.getPath();
     }
 
     public static Uri getSaveFile() {
