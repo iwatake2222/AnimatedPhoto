@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -67,7 +68,13 @@ public class ViewActivity extends AppCompatActivity implements LoaderManager.Loa
             m_bmpConv = null;
             m_orgUri = Uri.parse(orgUriStr);
             m_bmpOrg = BitmapFactory.decodeFile(m_orgUri.getPath());
+            // resize
             m_bmpOrg = Bitmap.createScaledBitmap(m_bmpOrg, Consts.SIZE_L, Consts.SIZE_L * m_bmpOrg.getHeight() / m_bmpOrg.getWidth(), false);
+            // rotate
+            int degree = Utility.getBitmapRotation(m_orgUri.getPath());
+            Matrix matrix = new Matrix();
+            matrix.postRotate(degree);
+            m_bmpOrg = Bitmap.createBitmap(m_bmpOrg, 0, 0, m_bmpOrg.getWidth(), m_bmpOrg.getHeight(), matrix, false);
             m_imageViewOrg.setImageBitmap(m_bmpOrg);
             showOriginalImage();
         }

@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.media.ExifInterface;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -132,5 +134,31 @@ public class Utility {
             logError("Save error");
             showToast(activity, "Failed to save file");
         }
+    }
+
+    public static int getBitmapRotation(String filePath)
+    {
+        int degree = 0;
+        try {
+            ExifInterface exifInterface = new ExifInterface(filePath);
+            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+            switch(orientation){
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    degree = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    degree = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    degree = 270;
+                    break;
+                default:
+                    degree = 0;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return degree;
     }
 }
